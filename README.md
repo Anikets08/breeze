@@ -1,87 +1,158 @@
-## Breeze – SEO side panel for Chrome
+# Breeze 🌬️
 
-Generate SEO-ready content from any page with a single click. Breeze lives in the Chrome Side Panel (no popup) and adapts to your browser’s light/dark theme.
+> Generate SEO-optimized content from any webpage using Chrome's built-in AI features
 
-### Features
+Breeze is a Chrome browser extension that leverages Chrome's native AI capabilities to transform web content into SEO-optimized blog posts, keyword lists, and Reddit posts. Simply navigate to any webpage and let Breeze generate professional content for you.
 
-- **Side Panel UX**: Click the extension icon to open Breeze in the side panel.
-- **Two modes**: Blog and Keywords.
-  - Blog supports selectable categories; markdown download included.
-  - Keywords extracts SEO keyword suggestions.
-- **Smart page capture**: Reads selected text (or the page body) via a minimal content script.
-- **Theme-aware**: Text and accents adjust to your system/browser theme.
+## ✨ Features
 
-### Screenshots
+- **📝 Blog Post Generation**: Create SEO-optimized blog posts in multiple categories:
+  - Educational/How-to Content
+  - Use Case Articles
+  - Problem-Solution Articles
+  - Best Practices and Tips
+  - Case Studies and Success Stories
 
-- Side Panel with category selection, generate, and download controls.
+- **🔑 Keyword Research**: Extract SEO-optimized keywords and keyphrases from any webpage
 
-### Getting started (development)
+- **📱 Reddit Post Generation**: Generate authentic, conversational Reddit posts optimized for engagement
 
-1. Install deps:
+- **🎨 Modern UI**: Beautiful, responsive interface with dark mode support
+
+- **💾 Easy Export**: Download blog posts as Markdown files or copy Reddit posts to clipboard
+
+## 🚀 Requirements
+
+- **Chrome Browser** (version 121 or later)
+- **Chrome's Built-in AI Features**: Must be enabled and available
+  - The extension uses Chrome's `LanguageModel` and `Summarizer` APIs
+  - These features are available in Chrome Canary or stable Chrome with AI features enabled
+
+## 📦 Installation
+
+### From Source
+
+1. Clone the repository:
    ```bash
+   git clone <repository-url>
+   cd breeze
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
    bun install
    ```
-2. Start dev server:
+
+3. Build the extension:
    ```bash
-   bun run dev
+   npm run build
    ```
-3. Load the extension in Chrome:
-   - Open chrome://extensions
-   - Enable Developer mode
-   - Click “Load unpacked” and select this project's `dist` folder
-   - After changes, click “Reload” on the extension
 
-### Build a production bundle
+4. Load the extension in Chrome:
+   - Open Chrome and navigate to `chrome://extensions/`
+   - Enable "Developer mode" (toggle in top right)
+   - Click "Load unpacked"
+   - Select the `dist` folder from the project directory
 
-```bash
-bun run build
-```
+### Development Mode
 
-This produces the build output and a zip at `release/crx-Breeze-1.0.0.zip` (via `vite-plugin-zip-pack`).
+1. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-### How it works
+2. Load the extension as described above (the `dist` folder will be updated automatically)
 
-- `side_panel`: Primary UI (`src/sidepanel/`) with a minimal, clean design.
-- `content script`: `src/content/main.tsx` listens for `breeze:getContent` and returns the page selection/text/HTML. No UI injected.
-- `background`: `src/background/index.ts` enables opening the side panel when you click the toolbar icon and handles the keyboard command.
-- `manifest`: `manifest.config.ts` defines the side panel and permissions.
+## 🎯 Usage
 
-### Usage
+1. **Navigate to any webpage** you want to use as source material
 
-1. Navigate to a page with content you want to transform in a SEO friendly way.
-2. Click the Breeze icon to open the side panel.
-3. Choose a mode:
-   - Blog: Pick a category (required) and click Generate, then Download .md.
-   - Keywords: Click Generate to get keywords.
+2. **Open Breeze**:
+   - Click the Breeze extension icon in your Chrome toolbar
+   - The side panel will open with the extension interface
 
-### Permissions
+3. **Choose your content type**:
+   - **Generate Blog**: Select a blog category and generate an SEO-optimized blog post
+   - **Generate Keywords**: Extract SEO keywords from the page
+   - **Generate Reddit Post**: Create a Reddit post based on the page content
 
-- `sidePanel`: Open and manage the Chrome side panel.
-- `tabs`, `activeTab`: To query the current tab and message the content script.
-- `contentSettings`: Present to support content-related access where required by some pages.
+4. **Review and export**:
+   - Blog posts can be downloaded as Markdown files
+   - Reddit posts can be copied to clipboard
+   - Keywords are displayed for easy copying
 
-### Tech stack
+## 🛠️ Development
 
-- Vite + React 19
-- TypeScript
-- CRXJS Vite plugin
-- Lottie for lightweight animations
-
-### Project structure
+### Project Structure
 
 ```
-src/
-  background/        # service worker
-  content/           # minimal content script (no UI)
-  sidepanel/         # main UI (React)
+breeze/
+├── src/
+│   ├── background/          # Service worker for extension lifecycle
+│   ├── components/          # React components
+│   │   ├── Button.tsx
+│   │   ├── Loading.tsx
+│   │   ├── ResultHeader.tsx
+│   │   ├── SectionTitle.tsx
+│   │   └── SourceBar.tsx
+│   ├── sidepanel/           # Main extension UI
+│   │   ├── App.tsx          # Main application component
+│   │   ├── App.css
+│   │   ├── index.html
+│   │   ├── index.css
+│   │   └── main.tsx
+│   └── utils/
+│       ├── aiService.ts     # Chrome AI API integration
+│       └── contentExtractor.ts  # Page content extraction
+├── public/                  # Static assets
+├── manifest.config.ts       # Chrome extension manifest
+├── vite.config.ts          # Vite configuration
+└── package.json
 ```
 
-### Notes
+### Scripts
 
-- There is no popup. Clicking the icon opens the side panel directly.
-- In Blog mode, the Generate button is disabled until a category is selected.
-- Downloaded blogs are saved as markdown files with a timestamp.
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Build the extension for production
+- `npm run preview` - Preview the production build
 
-### License
+### Building for Production
 
-Proprietary – for personal use unless otherwise specified.
+When you run `npm run build`, the extension will be packaged and a zip file will be created in the `release/` directory.
+
+## 🔧 Technologies
+
+- **React 19** - UI framework
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **@crxjs/vite-plugin** - Chrome extension support for Vite
+- **react-markdown** - Markdown rendering
+- **Chrome Extension APIs**:
+  - Side Panel API
+  - Tabs API
+  - Scripting API
+  - Chrome AI APIs (LanguageModel, Summarizer)
+
+## 📝 How It Works
+
+1. **Content Extraction**: The extension extracts text content from the currently active tab
+2. **Content Summarization**: Chrome's AI Summarizer API creates a concise summary
+3. **Content Generation**: Chrome's LanguageModel API generates the requested content type:
+   - Blog posts with SEO optimization
+   - Keyword lists for SEO research
+   - Reddit posts with authentic, conversational tone
+4. **Display & Export**: Generated content is displayed in a formatted view with export options
+
+## ⚠️ Notes
+
+- The extension requires Chrome's built-in AI features to be available
+- Content generation quality depends on the source page content
+- Large web pages may have content truncated to fit AI context windows
+- The extension works best with content-rich pages
+
+---
+
+Made with ❤️ using Chrome's built-in AI capabilities
+

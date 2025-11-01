@@ -4,7 +4,6 @@ import pkg from "./package.json";
 export default defineManifest({
   manifest_version: 3,
   name: pkg.name,
-  description: pkg.description,
   version: pkg.version,
   icons: {
     48: "public/logo.png",
@@ -13,20 +12,13 @@ export default defineManifest({
     default_icon: {
       48: "public/logo.png",
     },
-    default_title: pkg.name,
   },
-  background: {
-    service_worker: "src/background/index.ts",
-    type: "module",
-  },
-  permissions: ["sidePanel", "contentSettings", "tabs", "activeTab"],
-  content_scripts: [
-    {
-      js: ["src/content/main.tsx"],
-      matches: ["<all_urls>"],
-    },
-  ],
+  permissions: ["sidePanel", "tabs", "activeTab", "scripting"],
+  host_permissions: ["https://*/*", "http://*/*"],
   side_panel: {
     default_path: "src/sidepanel/index.html",
+  },
+  background: {
+    service_worker: "src/background/main.ts",
   },
 });

@@ -28,6 +28,18 @@ Breeze is a Chrome browser extension that leverages Chrome's native AI capabilit
   - The extension uses Chrome's `LanguageModel` and `Summarizer` APIs
   - These features are available in Chrome Canary or stable Chrome with AI features enabled
 
+## 🔧 Enabling Chrome AI Features
+
+Before using Breeze, you need to enable Chrome's built-in AI features:
+
+1. Open Chrome and navigate to `chrome://flags/`
+2. Search for and enable the following flags:
+   - **Prompt API for Gemini Nano**
+   - **Summarization API for Gemini Nano**
+3. **Restart your browser** for the changes to take effect
+
+Once these flags are enabled, Breeze will be able to use Chrome's AI capabilities to generate content.
+
 ## 📦 Installation
 
 ### From Source
